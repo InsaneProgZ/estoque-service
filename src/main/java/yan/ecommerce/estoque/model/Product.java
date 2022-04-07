@@ -12,34 +12,34 @@ import javax.persistence.Table;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    Integer id;
 
     @Column(name="name")
     String name;
 
-    @Column(name = "value")
-    Long value;
+    @Column(name = "amount")
+    Long amount;
 
-    public Product(String name, Long value) {
+    public Product(String name, Long amount) {
         this.name = name;
-        this.value = value;
+        this.amount = amount;
     }
 
     public Product() {
     }
 
-    public Product(Long id, String name, Long value) {
+    public Product(Integer id, String name, Long amount) {
         this.id = id;
         this.name = name;
-        this.value = value;
+        this.amount = amount;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,11 +51,11 @@ public class Product {
         this.name = name;
     }
 
-    public Long getValue() {
-        return value;
+    public Long getAmount() {
+        return amount;
     }
 
-    public void setValue(Long value) {
-        this.value = value;
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 }
