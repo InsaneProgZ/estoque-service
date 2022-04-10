@@ -28,15 +28,15 @@ public class InventoryController {
         productService.registerProduct(product);
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    List<Product> getProduct (@RequestHeader String name){
-        return productService.getProduct(name);
-    }
+//    @GetMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    List<Product> getProduct (@RequestHeader String name){
+//        return productService.getProduct(name);
+//    }
 
     @GetMapping(path = "/id")
     @ResponseStatus(HttpStatus.OK)
     Optional<Product> getProduct (@RequestHeader Integer id){
-        return productService.getProduct(id);
+        return Optional.ofNullable(productService.getProduct(id));
     }
 }
