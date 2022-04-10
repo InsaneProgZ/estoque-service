@@ -1,58 +1,37 @@
 package yan.ecommerce.estoque.repository;
 
+import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import yan.ecommerce.estoque.model.Product;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import java.util.List;
 
 @Repository
 public class ProductRepository {
-    @Autowired
-    EntityTransaction transaction;
-    @Autowired
-    EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    EntityManager entityManager;
+    Configuration configuration;
 
+    @Autowired
+    Session session;
 
+public void save (Product product){
 
-
-    public void save(Product product) {
-        try {
-            transaction.begin();
-
-            entityManager.persist(product);
-
-            entityManager.find(Product.class, product.getId());
-
-            transaction.commit();
-
-        } finally {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-//            entityManager.close();
-//            entityManagerFactory.close();
-        }
-    }
+    session.beginTransaction();
+    session.save(product);
+    session.getTransaction().commit();
+}
 
     public Product findById(Integer id) {
-        try {
-            transaction.begin();
+    return session.find(Product.class, id);
+    }
 
-            return entityManager.find(Product.class, id);
-
-        } finally {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            entityManager.close();
-            entityManagerFactory.close();
-        }
+    public List<Product> findByName(String name) {
+    return session.createQuery("SELECT p FROM Product p WHERE name =:name", Product.class)
+            .setParameter("name", name)
+            .getResultList();
     }
 
 
